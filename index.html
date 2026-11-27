@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f3eee4" />
+  <meta name="description" content="Prumo é uma agência de marketing que une estratégia, criação e gestão para construir marcas e campanhas com direção." />
+  <title>Prumo — Marketing com direção</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #f3eee4;
+      --paper-2: #e7e0d2;
+      --paper-3: #faf7f0;
+      --ink: #1a1612;
+      --muted: #6e665c;
+      --line: #d9d0c2;
+      --brass: #a56b2a;
+      --brass-soft: #f3e6d0;
+      --oxblood: #9c3b2e;
+      --green: #536c60;
+      --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+      --font-display: "Fraunces", Georgia, serif;
+      --max: 1180px;
+      --shadow: 0 24px 70px rgba(26,22,18,.10);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 92px; -webkit-font-smoothing: antialiased; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-sans); line-height: 1.55; }
+    body.menu-open { overflow: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    .wrap { width: min(var(--max), calc(100% - 48px)); margin-inline: auto; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 10px; color: var(--brass); font-size: .76rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+    .eyebrow::before { content: ""; width: 25px; height: 1px; background: currentColor; }
+    .display { font-family: var(--font-display); font-weight: 400; letter-spacing: -.045em; line-height: .99; }
+    .display em { color: var(--brass); font-weight: 400; }
+    .muted { color: var(--muted); }
+    .btn { min-height: 48px; display: inline-flex; justify-content: center; align-items: center; gap: 11px; border: 1px solid transparent; border-radius: 6px; padding: 0 20px; font-size: .9rem; font-weight: 600; transition: transform .2s, background .2s, border-color .2s, color .2s; cursor: pointer; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-dark { background: var(--ink); color: var(--paper); }
+    .btn-dark:hover { background: var(--brass); }
+    .btn-brass { background: var(--brass); color: white; }
+    .btn-brass:hover { background: var(--ink); }
+    .btn-outline { border-color: var(--line); background: transparent; color: var(--ink); }
+    .btn-outline:hover { border-color: var(--ink); background: var(--paper-3); }
+    .arrow { font-size: 1.15rem; line-height: 1; }
+
+    /* Header */
+    .site-header { position: sticky; top: 0; z-index: 50; background: rgba(243,238,228,.94); border-bottom: 1px solid rgba(217,208,194,.9); backdrop-filter: blur(14px); }
+    .header-inner { min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; flex-shrink: 0; }
+    .brand-mark { width: 39px; height: 39px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 6px; background: var(--paper-2); }
+    .brand-mark span { width: 3px; height: 23px; background: var(--brass); position: relative; }
+    .brand-mark span::before, .brand-mark span::after { content: ""; position: absolute; width: 9px; height: 1px; left: -3px; background: var(--brass); }
+    .brand-mark span::before { top: 5px; } .brand-mark span::after { bottom: 5px; }
+    .brand-name { display: block; font-family: var(--font-display); font-size: 1.48rem; line-height: 1; letter-spacing: -.035em; }
+    .brand-sub { display: block; margin-top: 4px; color: var(--muted); font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; }
+    .nav { display: flex; align-items: center; gap: 29px; }
+    .nav a { color: var(--muted); font-size: .87rem; transition: color .2s; }
+    .nav a:hover, .nav a:focus-visible { color: var(--ink); }
+    .header-actions { display: flex; align-items: center; gap: 11px; }
+    .access-link { color: var(--muted); font-size: .82rem; font-weight: 500; }
+    .access-link:hover { color: var(--ink); }
+    .menu-toggle { display: none; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 6px; background: transparent; color: var(--ink); }
+
+    /* Hero */
+    .hero { position: relative; overflow: hidden; padding: 92px 0 80px; }
+    .hero::after { content: ""; position: absolute; width: 440px; height: 440px; top: 15px; right: -250px; border: 1px solid rgba(165,107,42,.16); border-radius: 50%; box-shadow: 0 0 0 38px rgba(165,107,42,.025), 0 0 0 76px rgba(165,107,42,.02); pointer-events: none; }
+    .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 62px; align-items: center; position: relative; z-index: 1; }
+    .hero h1 { max-width: 690px; margin: 22px 0 23px; font-size: clamp(3.55rem, 6.4vw, 6.25rem); }
+    .hero-copy { max-width: 540px; color: var(--muted); font-size: 1.08rem; line-height: 1.75; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+    .hero-note { display: flex; align-items: center; gap: 11px; margin-top: 33px; color: var(--muted); font-size: .78rem; }
+    .note-dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; box-shadow: 0 0 0 5px rgba(83,108,96,.12); }
+    .hero-art { min-height: 490px; position: relative; display: flex; align-items: center; justify-content: center; }
+    .art-backdrop { position: absolute; width: 84%; height: 82%; right: 0; top: 7%; background: var(--paper-2); border-radius: 48% 48% 8px 8px; }
+    .folio { position: relative; width: min(410px, 94%); min-height: 440px; padding: 25px; background: var(--ink); color: var(--paper); border-radius: 7px; box-shadow: var(--shadow); transform: rotate(-3deg); }
+    .folio-top { display: flex; justify-content: space-between; align-items: center; color: #c6b9a8; font-size: .68rem; letter-spacing: .13em; text-transform: uppercase; }
+    .folio-rule { height: 1px; background: rgba(243,238,228,.22); margin: 18px 0 26px; }
+    .folio-kicker { color: #d7a66f; font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; }
+    .folio h2 { margin: 10px 0 13px; max-width: 300px; font: 400 2.65rem/.98 var(--font-display); letter-spacing: -.035em; }
+    .folio p { max-width: 275px; color: #c9c0b4; font-size: .77rem; }
+    .folio-visual { height: 142px; margin: 24px 0 18px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 7px; }
+    .visual-block { position: relative; overflow: hidden; background: #a56b2a; border-radius: 3px; }
+    .visual-block:first-child { background: #d2b48c; }
+    .visual-block:first-child::before { content: ""; position: absolute; width: 145px; height: 145px; border-radius: 50%; background: #8d4e32; top: 17px; left: 25px; box-shadow: 0 0 0 12px rgba(243,238,228,.22); }
+    .visual-block:first-child::after { content: "PRUMO"; position: absolute; left: 14px; bottom: 12px; color: #fff8ed; font: 500 1.05rem var(--font-display); letter-spacing: .12em; }
+    .visual-block:last-child { background: #6a7562; }
+    .visual-block:last-child::before { content: "IDEIA\A COM\A DIREÇÃO"; white-space: pre; position: absolute; left: 17px; top: 18px; font: 400 1.35rem/.95 var(--font-display); color: #f4efe5; }
+    .visual-block:last-child::after { content: "CAMPANHA · 01"; position: absolute; left: 17px; bottom: 15px; color: rgba(255,255,255,.72); font-size: .56rem; letter-spacing: .12em; }
+    .folio-foot { display: flex; align-items: center; justify-content: space-between; color: #c6b9a8; font-size: .65rem; letter-spacing: .09em; text-transform: uppercase; }
+    .floating-card { position: absolute; right: -4px; bottom: 24px; width: 190px; padding: 15px; background: var(--paper-3); border: 1px solid var(--line); border-radius: 6px; box-shadow: 0 14px 40px rgba(26,22,18,.12); transform: rotate(4deg); }
+    .floating-card small { color: var(--muted); font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; }
+    .floating-card strong { display: block; margin: 5px 0 3px; font: 400 1.25rem var(--font-display); }
+    .floating-card span { color: var(--green); font-size: .72rem; }
+
+    /* Ticker */
+    .ticker { border-block: 1px solid var(--line); background: rgba(231,224,210,.55); }
+    .ticker-inner { min-height: 72px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+    .ticker-label { color: var(--muted); font-size: .72rem; letter-spacing: .13em; text-transform: uppercase; }
+    .ticker-items { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px 30px; color: var(--ink); font: 400 1.04rem var(--font-display); }
+    .ticker-items span::before { content: "✳"; margin-right: 9px; color: var(--brass); font: .7rem var(--font-sans); }
+
+    /* Sections */
+    section.content-section { padding: 112px 0; }
+    .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 35px; margin-bottom: 48px; }
+    .section-heading h2 { max-width: 680px; margin: 14px 0 0; font-size: clamp(2.65rem, 4.5vw, 4.45rem); }
+    .section-heading p { max-width: 350px; margin: 0 0 7px; color: var(--muted); font-size: .94rem; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+    .service { min-height: 245px; padding: 27px 27px 29px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); transition: background .25s; }
+    .service:hover { background: rgba(250,247,240,.75); }
+    .service-icon { width: 42px; height: 42px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--brass); }
+    .service-icon svg { width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .service-num { float: right; color: #a69a89; font-size: .72rem; letter-spacing: .1em; }
+    .service h3 { margin: 23px 0 8px; font: 400 1.55rem var(--font-display); }
+    .service p { max-width: 300px; margin: 0; color: var(--muted); font-size: .88rem; line-height: 1.7; }
+
+    /* Point of view */
+    .manifesto { background: var(--ink); color: var(--paper); position: relative; overflow: hidden; }
+    .manifesto::before { content: "P"; position: absolute; right: 4%; bottom: -230px; color: rgba(243,238,228,.035); font: 700 35rem/.8 var(--font-display); pointer-events: none; }
+    .manifesto-grid { display: grid; grid-template-columns: .72fr 1.28fr; gap: 90px; align-items: start; position: relative; z-index: 1; }
+    .manifesto .eyebrow { color: #d7a66f; }
+    .manifesto h2 { margin: 0; font-size: clamp(2.7rem, 4.8vw, 4.8rem); }
+    .manifesto h2 em { color: #d7a66f; }
+    .manifesto-copy { max-width: 620px; padding-top: 9px; }
+    .manifesto-copy p { margin: 0 0 19px; color: #c9c0b4; font-size: 1rem; line-height: 1.85; }
+    .principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 42px; }
+    .principle { padding-top: 15px; border-top: 1px solid rgba(243,238,228,.23); }
+    .principle b { display: block; color: #e5b77f; font: 400 1.25rem var(--font-display); }
+    .principle span { display: block; margin-top: 5px; color: #b9aea0; font-size: .77rem; }
+
+    /* Method */
+    .method-grid { display: grid; grid-template-columns: .72fr 1.28fr; gap: 90px; }
+    .method-intro { position: sticky; top: 125px; align-self: start; }
+    .method-intro h2 { margin: 15px 0 20px; font-size: clamp(2.65rem, 4.4vw, 4.25rem); }
+    .method-intro p { max-width: 360px; color: var(--muted); }
+    .method-list { border-top: 1px solid var(--line); }
+    .method-step { display: grid; grid-template-columns: 55px 1fr 25px; gap: 20px; padding: 25px 0; border-bottom: 1px solid var(--line); align-items: start; }
+    .method-step .num { color: var(--brass); font-size: .8rem; padding-top: 4px; }
+    .method-step h3 { margin: 0 0 5px; font: 400 1.55rem var(--font-display); }
+    .method-step p { max-width: 550px; margin: 0; color: var(--muted); font-size: .88rem; }
+    .method-step .mark { color: var(--brass); font-size: 1.2rem; }
+
+    /* Desk */
+    .desk-section { padding: 0 0 112px; }
+    .desk-card { display: grid; grid-template-columns: .95fr 1.05fr; min-height: 440px; overflow: hidden; background: var(--paper-2); border-radius: 8px; }
+    .desk-copy { padding: 58px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
+    .desk-copy h2 { margin: 15px 0 17px; font-size: clamp(2.5rem, 4vw, 4.1rem); }
+    .desk-copy p { max-width: 445px; margin: 0; color: var(--muted); line-height: 1.8; }
+    .desk-copy .btn { margin-top: 27px; }
+    .desk-ui { display: flex; align-items: center; justify-content: center; padding: 36px; background: #d8cebd; }
+    .ui-window { width: 100%; max-width: 500px; min-height: 318px; display: grid; grid-template-columns: 128px 1fr; overflow: hidden; border: 1px solid rgba(26,22,18,.15); border-radius: 7px; background: var(--paper-3); box-shadow: 0 20px 50px rgba(26,22,18,.14); transform: rotate(2deg); }
+    .ui-sidebar { padding: 17px 11px; background: #24201b; color: #f3eee4; }
+    .ui-brand { margin: 0 0 20px 4px; font: 400 1.2rem var(--font-display); }
+    .ui-nav { display: grid; gap: 7px; }
+    .ui-nav span { padding: 7px 8px; border-radius: 3px; color: #c3b9ac; font-size: .62rem; }
+    .ui-nav span:first-child { background: #51402d; color: white; }
+    .ui-main { padding: 22px 20px; }
+    .ui-kicker { color: var(--brass); font-size: .55rem; letter-spacing: .13em; text-transform: uppercase; }
+    .ui-title { margin: 5px 0 16px; font: 400 1.55rem var(--font-display); }
+    .ui-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+    .ui-stat { padding: 9px 8px; background: var(--paper-2); border-radius: 3px; }
+    .ui-stat small { display: block; color: var(--muted); font-size: .5rem; }
+    .ui-stat b { display: block; margin-top: 3px; font: 400 1.1rem var(--font-display); }
+    .ui-lines { margin-top: 16px; padding: 12px; border: 1px solid var(--line); border-radius: 3px; }
+    .ui-lines strong { display: block; margin-bottom: 8px; font: 400 .95rem var(--font-display); }
+    .ui-lines i { display: block; width: 100%; height: 5px; margin-top: 6px; border-radius: 4px; background: #e7e0d2; }
+    .ui-lines i:nth-child(3) { width: 80%; } .ui-lines i:nth-child(4) { width: 58%; }
+
+    /* Contact */
+    .contact { background: var(--paper-3); border-top: 1px solid var(--line); }
+    .contact-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 85px; }
+    .contact-intro h2 { margin: 15px 0 19px; font-size: clamp(2.8rem, 4.7vw, 4.7rem); }
+    .contact-intro p { max-width: 410px; color: var(--muted); }
+    .contact-note { margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: .78rem; }
+    .contact-form { display: grid; grid-template-columns: 1fr 1fr; gap: 17px; align-content: start; }
+    .field { display: flex; flex-direction: column; gap: 7px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { color: var(--muted); font-size: .78rem; font-weight: 500; }
+    .field input, .field select, .field textarea { width: 100%; min-height: 48px; border: 1px solid var(--line); border-radius: 5px; padding: 11px 13px; background: var(--paper); color: var(--ink); outline: none; transition: border-color .2s, box-shadow .2s; }
+    .field textarea { min-height: 116px; resize: vertical; }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--brass); box-shadow: 0 0 0 3px rgba(165,107,42,.10); }
+    .form-foot { grid-column: 1 / -1; display: flex; align-items: center; flex-wrap: wrap; gap: 15px; }
+    .form-status { grid-column: 1 / -1; display: none; padding: 12px 14px; border: 1px solid var(--brass); border-radius: 5px; background: var(--brass-soft); color: var(--ink); font-size: .83rem; }
+    .form-status.show { display: block; }
+    .privacy { color: var(--muted); font-size: .7rem; max-width: 280px; }
+
+    /* Footer */
+    .footer { background: var(--ink); color: var(--paper); padding: 35px 0; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .footer .brand-sub { color: #b9aea0; }
+    .footer-copy { color: #b9aea0; font-size: .75rem; }
+    .footer-links { display: flex; gap: 20px; color: #d0c6b9; font-size: .78rem; }
+    .footer-links a:hover { color: #e5b77f; }
+
+    @media (max-width: 980px) {
+      .nav { gap: 17px; }
+      .hero-grid { gap: 30px; }
+      .hero h1 { font-size: clamp(3.3rem, 7vw, 5rem); }
+      .manifesto-grid, .method-grid { gap: 48px; }
+      .desk-copy { padding: 42px; }
+      .contact-grid { gap: 48px; }
+    }
+    @media (max-width: 760px) {
+      .wrap { width: min(100% - 36px, var(--max)); }
+      .header-inner { min-height: 70px; }
+      .menu-toggle { display: grid; place-items: center; }
+      .nav { position: fixed; inset: 70px 0 auto; display: none; padding: 18px 22px 23px; background: var(--paper); border-bottom: 1px solid var(--line); box-shadow: 0 18px 28px rgba(26,22,18,.08); }
+      .nav.open { display: grid; gap: 0; }
+      .nav a { padding: 13px 3px; border-bottom: 1px solid var(--line); }
+      .header-actions .access-link { display: none; }
+      .header-actions .btn { min-height: 42px; padding: 0 12px; font-size: .78rem; }
+      .hero { padding: 66px 0 55px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 30px; }
+      .hero h1 { max-width: 650px; font-size: clamp(3.2rem, 12vw, 5rem); }
+      .hero-copy { font-size: 1rem; }
+      .hero-art { min-height: 425px; }
+      .folio { width: min(390px, 89%); min-height: 405px; }
+      .floating-card { right: 0; bottom: 9px; }
+      .ticker-inner { padding: 16px 0; align-items: flex-start; flex-direction: column; }
+      .ticker-items { justify-content: flex-start; gap: 8px 18px; }
+      section.content-section { padding: 78px 0; }
+      .section-heading { display: block; margin-bottom: 30px; }
+      .section-heading p { margin-top: 17px; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .service { min-height: 230px; padding: 22px; }
+      .manifesto-grid, .method-grid, .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+      .method-intro { position: static; }
+      .principles { margin-top: 29px; }
+      .desk-section { padding-bottom: 78px; }
+      .desk-card { grid-template-columns: 1fr; }
+      .desk-copy { padding: 38px 29px; }
+      .desk-ui { min-height: 340px; padding: 25px; }
+      .contact-form { gap: 13px; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+    }
+    @media (max-width: 480px) {
+      .wrap { width: calc(100% - 30px); }
+      .brand-name { font-size: 1.35rem; }
+      .header-actions .btn { display: none; }
+      .hero h1 { font-size: clamp(3rem, 14vw, 4.1rem); }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .hero-actions .btn { width: 100%; }
+      .hero-art { min-height: 365px; }
+      .folio { min-height: 360px; padding: 18px; }
+      .folio h2 { font-size: 2.2rem; }
+      .folio-visual { height: 112px; margin: 18px 0 14px; }
+      .floating-card { width: 160px; padding: 11px; right: -3px; bottom: 0; }
+      .services-grid { grid-template-columns: 1fr; }
+      .service { min-height: auto; }
+      .principles { grid-template-columns: 1fr; }
+      .method-step { grid-template-columns: 35px 1fr 20px; gap: 12px; }
+      .ui-window { grid-template-columns: 95px 1fr; }
+      .ui-main { padding: 18px 12px; }
+      .ui-sidebar { padding-inline: 7px; }
+      .contact-form { grid-template-columns: 1fr; }
+      .field.full, .form-foot, .form-status { grid-column: 1; }
+      .form-foot { align-items: flex-start; flex-direction: column; }
+      .footer-links { flex-wrap: wrap; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#inicio" aria-label="Prumo, início">
+        <span class="brand-mark" aria-hidden="true"><span></span></span>
+        <span><span class="brand-name">Prumo</span><span class="brand-sub">Estratégia & criação</span></span>
+      </a>
+      <nav class="nav" id="main-nav" aria-label="Navegação principal">
+        <a href="#servicos">O que fazemos</a>
+        <a href="#metodo">Nosso método</a>
+        <a href="#mesa">A Mesa</a>
+        <a href="#contato">Contato</a>
+      </nav>
+      <div class="header-actions">
+        <a class="access-link" href="./mesa.html">Acesso da equipe ↗</a>
+        <a class="btn btn-dark" href="#contato">Começar um projeto <span class="arrow">↗</span></a>
+        <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="main-nav">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="eyebrow">Agência de marketing · 360°</span>
+          <h1 class="display">Marketing com <em>direção.</em><br>Criação com propósito.</h1>
+          <p class="hero-copy">Ajudamos marcas a encontrar seu lugar, comunicar seu valor e crescer com consistência. Estratégia, criatividade e gestão trabalhando na mesma direção.</p>
+          <div class="hero-actions">
+            <a class="btn btn-dark" href="#contato">Vamos conversar <span class="arrow">↗</span></a>
+            <a class="btn btn-outline" href="#servicos">Conheça nossas frentes <span class="arrow">↓</span></a>
+          </div>
+          <div class="hero-note"><span class="note-dot"></span> Estratégia antes do ruído. Clareza em cada entrega.</div>
+        </div>
+        <div class="hero-art" aria-label="Composição gráfica conceitual da Prumo">
+          <div class="art-backdrop"></div>
+          <article class="folio">
+            <div class="folio-top"><span>Prumo · Caderno de ideias</span><span>01 / 06</span></div>
+            <div class="folio-rule"></div>
+            <span class="folio-kicker">Uma marca em movimento</span>
+            <h2>Ideias que encontram seu ponto.</h2>
+            <p>Uma direção clara transforma boas ideias em comunicação que faz sentido.</p>
+            <div class="folio-visual"><div class="visual-block"></div><div class="visual-block"></div></div>
+            <div class="folio-foot"><span>Estratégia · Criação · Resultado</span><span>PR / 026</span></div>
+          </article>
+          <div class="floating-card"><small>Nosso ponto de partida</small><strong>Direção, não fórmula.</strong><span>→ Cada marca pede um caminho.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ticker" aria-label="Áreas de atuação">
+      <div class="wrap ticker-inner">
+        <span class="ticker-label">Uma agência, várias frentes</span>
+        <div class="ticker-items"><span>Estratégia</span><span>Branding</span><span>Conteúdo</span><span>Campanhas</span><span>Performance</span></div>
+      </div>
+    </div>
+
+    <section class="content-section" id="servicos">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><span class="eyebrow">O que fazemos</span><h2 class="display">Tudo conversa.<br><em>Nada acontece solto.</em></h2></div>
+          <p>Reunimos as disciplinas essenciais do marketing para construir uma presença consistente — do posicionamento à análise dos resultados.</p>
+        </div>
+        <div class="services-grid">
+          <article class="service">
+            <span class="service-num">01 / DIREÇÃO</span><span class="service-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg></span>
+            <h3>Estratégia & planejamento</h3><p>Diagnóstico, posicionamento, objetivos, planejamento de comunicação e definição de caminhos para cada marca.</p>
+          </article>
+          <article class="service">
+            <span class="service-num">02 / IDENTIDADE</span><span class="service-icon"><svg viewBox="0 0 24 24"><path d="M12 3 20 8v8l-8 5-8-5V8z"/><path d="m8 12 2.5 2.5L16 9"/></svg></span>
+            <h3>Branding & design</h3><p>Identidade visual, linguagem de marca, direção de arte e materiais que tornam a comunicação reconhecível.</p>
+          </article>
+          <article class="service">
+            <span class="service-num">03 / PRESENÇA</span><span class="service-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 9h8M8 13h5M8 17h3"/></svg></span>
+            <h3>Social & conteúdo</h3><p>Calendário editorial, copywriting, roteiros, publicações e gestão de canais digitais com intenção.</p>
+          </article>
+          <article class="service">
+            <span class="service-num">04 / ALCANCE</span><span class="service-icon"><svg viewBox="0 0 24 24"><path d="M4 19V5m0 14h17"/><path d="m7 15 4-4 3 2 6-7"/><path d="M16 6h4v4"/></svg></span>
+            <h3>Campanhas & performance</h3><p>Planejamento de mídia, anúncios, testes de criativos e otimização orientada por objetivos e indicadores.</p>
+          </article>
+          <article class="service">
+            <span class="service-num">05 / PRODUÇÃO</span><span class="service-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3z"/></svg></span>
+            <h3>Audiovisual & criativos</h3><p>Conceitos, peças gráficas, vídeos e adaptações para diferentes formatos, públicos e plataformas.</p>
+          </article>
+          <article class="service">
+            <span class="service-num">06 / INTELIGÊNCIA</span><span class="service-icon"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16"/><rect x="7" y="11" width="3" height="5"/><rect x="13" y="7" width="3" height="9"/><path d="m7 8 3-2 3 1 5-4"/></svg></span>
+            <h3>Dados, CRM & otimização</h3><p>Leitura de audiência, organização de informações, acompanhamento de resultados e próximos passos.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section manifesto">
+      <div class="wrap manifesto-grid">
+        <div><span class="eyebrow">Nossa visão</span></div>
+        <div class="manifesto-copy">
+          <h2 class="display">Não acreditamos em fórmula pronta. Acreditamos em <em>boas escolhas.</em></h2>
+          <p>Uma marca não precisa estar em todos os lugares nem falar de tudo. Precisa entender quem é, o que oferece e por que alguém deveria prestar atenção.</p>
+          <p>Por isso, aproximamos estratégia e criação. Antes de produzir, buscamos contexto. Antes de impulsionar, definimos objetivo. E, depois de publicar, acompanhamos o que os dados e as pessoas mostram.</p>
+          <div class="principles">
+            <div class="principle"><b>Clareza</b><span>Mensagem com intenção.</span></div>
+            <div class="principle"><b>Consistência</b><span>Marca reconhecível no tempo.</span></div>
+            <div class="principle"><b>Critério</b><span>Decisão com contexto e evidência.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section" id="metodo">
+      <div class="wrap method-grid">
+        <div class="method-intro"><span class="eyebrow">Nosso método</span><h2 class="display">Do primeiro papo à próxima <em>decisão.</em></h2><p>Um fluxo de trabalho que conecta as etapas e mantém estratégia, criação e gestão no mesmo fio.</p></div>
+        <div class="method-list">
+          <article class="method-step"><span class="num">01</span><div><h3>Escuta & diagnóstico</h3><p>Entendemos o negócio, o momento da marca, os desafios e o que precisa mudar.</p></div><span class="mark">↘</span></article>
+          <article class="method-step"><span class="num">02</span><div><h3>Oferta & público</h3><p>Organizamos produtos, serviços, diferenciais, condições e as pessoas que queremos alcançar.</p></div><span class="mark">↘</span></article>
+          <article class="method-step"><span class="num">03</span><div><h3>Mensagem & conceito</h3><p>Definimos a narrativa, os argumentos, os formatos e a linguagem de cada campanha.</p></div><span class="mark">↘</span></article>
+          <article class="method-step"><span class="num">04</span><div><h3>Criação & produção</h3><p>Transformamos a estratégia em textos, peças, vídeos e experiências consistentes.</p></div><span class="mark">↘</span></article>
+          <article class="method-step"><span class="num">05</span><div><h3>Gestão & otimização</h3><p>Planejamos a distribuição, acompanhamos indicadores e ajustamos o que precisa evoluir.</p></div><span class="mark">↘</span></article>
+          <article class="method-step"><span class="num">06</span><div><h3>Auditoria & aprendizado</h3><p>Revisamos qualidade, conformidade e resultados para orientar o próximo ciclo.</p></div><span class="mark">✳</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="desk-section" id="mesa">
+      <div class="wrap desk-card">
+        <div class="desk-copy">
+          <span class="eyebrow">Por trás da criação</span>
+          <h2 class="display">Uma boa ideia precisa de uma boa <em>operação.</em></h2>
+          <p>A Mesa da Agência é o ambiente de trabalho da Prumo. É onde organizamos ofertas, campanhas, CRM, textos, criativos, gestão e auditoria — conectando o planejamento à entrega.</p>
+          <a class="btn btn-dark" href="./mesa.html">Conhecer a Mesa da Agência <span class="arrow">↗</span></a>
+        </div>
+        <div class="desk-ui" aria-label="Ilustração da interface da Mesa da Agência">
+          <div class="ui-window">
+            <aside class="ui-sidebar"><div class="ui-brand">Prumo</div><div class="ui-nav"><span>▦ &nbsp; Mesa</span><span>◇ &nbsp; Catálogo</span><span>♙ &nbsp; CRM</span><span>✎ &nbsp; Copy</span><span>▧ &nbsp; Editor</span><span>↗ &nbsp; Gestão</span><span>✓ &nbsp; Auditoria</span></div></aside>
+            <div class="ui-main"><div class="ui-kicker">Visão da agência</div><div class="ui-title">A mesa está aberta.</div><div class="ui-stats"><div class="ui-stat"><small>Campanhas</small><b>—</b></div><div class="ui-stat"><small>Em produção</small><b>—</b></div><div class="ui-stat"><small>Pendências</small><b>—</b></div></div><div class="ui-lines"><strong>Fluxo de trabalho</strong><i></i><i></i><i></i></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section contact" id="contato">
+      <div class="wrap contact-grid">
+        <div class="contact-intro"><span class="eyebrow">Vamos conversar</span><h2 class="display">Toda boa parceria começa com uma <em>boa conversa.</em></h2><p>Conte um pouco sobre sua marca, seu momento e o que você gostaria de construir. A partir daí, podemos encontrar um caminho.</p><div class="contact-note">Sem fórmula pronta. O primeiro passo é entender o contexto do seu negócio.</div></div>
+        <form class="contact-form" id="contact-form">
+          <div class="field"><label for="name">Seu nome</label><input id="name" name="name" autocomplete="name" placeholder="Como podemos chamar você?" required /></div>
+          <div class="field"><label for="company">Empresa ou marca</label><input id="company" name="company" autocomplete="organization" placeholder="Nome do negócio" /></div>
+          <div class="field"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" placeholder="voce@empresa.com" required /></div>
+          <div class="field"><label for="service">O que você procura?</label><select id="service" name="service" required><option value="" disabled selected>Selecione uma frente</option><option>Estratégia e planejamento</option><option>Branding e design</option><option>Social media e conteúdo</option><option>Campanhas e tráfego pago</option><option>Audiovisual e criativos</option><option>CRM, dados e consultoria</option><option>Uma solução integrada</option><option>Ainda quero entender as possibilidades</option></select></div>
+          <div class="field full"><label for="message">Conte um pouco sobre seu projeto</label><textarea id="message" name="message" placeholder="Qual é o desafio ou objetivo da sua marca?"></textarea></div>
+          <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+          <div class="form-foot"><button class="btn btn-brass" type="submit">Preparar briefing <span class="arrow">↗</span></button><span class="privacy">Se o canal de contato ainda não estiver configurado, o briefing poderá ser copiado para você enviar pelo canal da agência.</span></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <a class="brand" href="#inicio"><span class="brand-mark" aria-hidden="true"><span></span></span><span><span class="brand-name">Prumo</span><span class="brand-sub">Marketing com direção</span></span></a>
+      <div class="footer-copy">© <span id="year"></span> Prumo. Estratégia, criação e gestão.</div>
+      <div class="footer-links"><a href="#servicos">Serviços</a><a href="#metodo">Método</a><a href="#contato">Contato</a><a href="./mesa.html">Mesa da Agência ↗</a></div>
+    </div>
+  </footer>
+
+  <script>
+    // Configure pelo menos um canal antes de publicar a landing page.
+    // E-mail: "contato@suaagencia.com.br"
+    // WhatsApp: número com DDI e DDD, somente dígitos. Ex.: "5511999999999"
+    const PRUMO_CONTACT = { email: "", whatsapp: "" };
+
+    const menuButton = document.getElementById('menu-toggle');
+    const nav = document.getElementById('main-nav');
+    function closeMenu() {
+      nav.classList.remove('open');
+      menuButton.setAttribute('aria-expanded', 'false');
+      menuButton.setAttribute('aria-label', 'Abrir menu');
+      document.body.classList.remove('menu-open');
+    }
+    menuButton.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('open');
+      menuButton.setAttribute('aria-expanded', String(isOpen));
+      menuButton.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+      document.body.classList.toggle('menu-open', isOpen);
+    });
+    nav.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+    window.addEventListener('resize', () => { if (window.innerWidth > 760) closeMenu(); });
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const form = document.getElementById('contact-form');
+    const statusBox = document.getElementById('form-status');
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+      const data = new FormData(form);
+      const details = [
+        'Olá, Prumo! Gostaria de conversar sobre um projeto.',
+        '',
+        `Nome: ${data.get('name')}`,
+        `Empresa/marca: ${data.get('company') || 'Não informado'}`,
+        `E-mail: ${data.get('email')}`,
+        `Interesse: ${data.get('service')}`,
+        `Projeto: ${data.get('message') || 'Não informado'}`
+      ].join('\n');
+
+      if (PRUMO_CONTACT.email.trim()) {
+        const subject = encodeURIComponent(`Novo contato pelo site — ${data.get('name')}`);
+        window.location.href = `mailto:${PRUMO_CONTACT.email.trim()}?subject=${subject}&body=${encodeURIComponent(details)}`;
+        statusBox.textContent = 'Seu aplicativo de e-mail foi aberto com o briefing preenchido. Revise e envie a mensagem.';
+        statusBox.classList.add('show');
+      } else if (PRUMO_CONTACT.whatsapp.trim()) {
+        const phone = PRUMO_CONTACT.whatsapp.replace(/\D/g, '');
+        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(details)}`, '_blank', 'noopener,noreferrer');
+        statusBox.textContent = 'O WhatsApp foi aberto com o briefing preenchido. Revise e envie a mensagem.';
+        statusBox.classList.add('show');
+      } else {
+        try {
+          await navigator.clipboard.writeText(details);
+          statusBox.textContent = 'Briefing copiado. O formulário ainda não está conectado a um e-mail ou WhatsApp da agência; configure um canal no início do script para receber contatos diretamente.';
+        } catch {
+          statusBox.textContent = 'O formulário ainda não está conectado a um e-mail ou WhatsApp da agência. Configure PRUMO_CONTACT no script para ativar o envio.';
+        }
+        statusBox.classList.add('show');
+      }
+    });
+  </script>
+</body>
+</html>
