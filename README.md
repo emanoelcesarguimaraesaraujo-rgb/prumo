@@ -1,29 +1,50 @@
-# Prumo — publicação e configuração
+# Prumo — pacote integrado
+
+Este pacote reúne a landing pública, a Mesa da Agência, o assistente híbrido, o mascote Pru e o backend Cloudflare.
 
 ## Estrutura
-- `index.html`: landing pública original, sem mascote.
-- `mesa.html`: área interna; Pru só é montado depois do login.
-- `pet/`: sprites originais fornecidos. O mascote e comandos estão no próprio HTML da Mesa.
-- `cloudflare/`: Worker API e schema D1.
+- `index.html`: landing page pública.
+- `mesa.html`: Mesa da Agência, autenticação e assistente lateral.
+- `pet/`: mascote Pru, sprites, animações e demonstração.
+- `cloudflare/worker.js`: API de cadastro, login, saldo e chatbot híbrido com Workers AI.
+- `cloudflare/schema.sql`: estrutura do banco Cloudflare D1.
+- `cloudflare/wrangler.toml`: configuração para publicar o Worker com Wrangler.
+- `GUIA-PUBLICACAO-GITHUB-CLOUDFLARE.md`: guia de publicação e atualização.
+- `CHECKLIST-ANTES-DO-DEPLOY.txt`: lista de conferência.
 
-## Cloudflare
-1. Crie um banco D1 chamado `prumo-db` no painel Cloudflare e copie o ID para `cloudflare/wrangler.toml`.
-2. No terminal, instale Node.js e rode `npm install -g wrangler`, depois `wrangler login`.
-3. Na pasta `cloudflare`, execute `wrangler d1 execute prumo-db --remote --file=schema.sql`.
-4. Configure os segredos: `wrangler secret put OPENAI_API_KEY` e `wrangler secret put JWT_SECRET` (use uma string aleatória longa). Opcional: `wrangler secret put OPENAI_MODEL` com `gpt-4.1-mini` (ou configure como variável).
-5. Execute `wrangler deploy`. Anote a URL `https://prumo-api.<sua-conta>.workers.dev`.
-6. Em `mesa.html`, substitua `https://SEU-WORKER.workers.dev` em `window.PRUMO_API_URL` pela URL real.
-7. Publique `index.html` e `mesa.html` juntos no Cloudflare Pages (upload direto ou conectando o repositório GitHub).
+## Chatbot híbrido
+1. O Worker verifica se a mensagem corresponde a uma pergunta frequente cadastrada. Se corresponder, responde pela FAQ local.
+2. Se não corresponder, envia o histórico recente ao Workers AI usando o modelo configurado em `AI_MODEL`.
+3. As duas modalidades consomem 1 crédito por mensagem. A cota é validada no D1, no servidor.
+4. Cada usuário tem 2 créditos por dia, renovados segundo `America/Fortaleza`.
+5. A abertura do chat e o comando `/pet` não consomem créditos.
 
-## GitHub
-Crie um repositório, coloque todos os arquivos desta pasta na raiz e faça commit/push. No Cloudflare Pages, conecte o repositório, framework preset `None`, build command vazio e output directory `/` (raiz).
+O chatbot não usa a API da OpenAI e não exige `OPENAI_API_KEY`. O modelo padrão é `@cf/zai-org/glm-4.7-flash`; a disponibilidade, os limites e a franquia gratuita dependem das condições atuais da Cloudflare.
 
-## Fluxo Pru
-Após login online, o Pru aparece na Mesa. `Me ajude` abre o chat e mostra “Olá! No que posso ajudar?” sem consumir crédito. Cada mensagem enviada chama `POST /api/research` e desconta 1 crédito, até 2 por dia por conta. Os comandos de movimento, carinho e chibatada são locais. O Worker valida a cota no D1 e devolve o crédito se a chamada OpenAI falhar.
+## Pru opcional
+- O mascote é exibido na Mesa após o login, se não tiver sido ocultado anteriormente.
+- A ação **Suma** faz o Pru desaparecer com partículas de poeira.
+- Digite `/pet` no chat para fazê-lo reaparecer.
+- A preferência de ocultar o Pru fica salva no navegador até chamar `/pet`.
+- `/pet` é local, não chama o modelo e não consome crédito.
 
-## Importante
-- O modo de autenticação online é ativado quando a URL real do Worker é configurada. Sem isso, o HTML mantém o modo local legado, sem IA nem sincronização.
-- A senha online exige 10 caracteres.
-- A chave OpenAI nunca vai para o HTML; fica em Worker Secret.
-- Para produção, restrinja `Access-Control-Allow-Origin` ao domínio Pages, implemente verificação de e-mail, recuperação de senha, rate limiting e política de privacidade. O Worker usa cota por data UTC.
-- O D1 controla o limite por usuário no servidor; comandos locais não chamam a API.
+## Segurança e dados
+- Senhas são armazenadas com PBKDF2, salt individual e 180.000 iterações.
+- Tokens de sessão são assinados pelo Worker com `JWT_SECRET`.
+- A contagem de créditos fica no D1 e não depende do contador visual do navegador.
+- Nunca coloque `JWT_SECRET` ou outras credenciais em arquivos do GitHub.
+- Os dados operacionais de campanhas e ferramentas da Mesa continuam no armazenamento local do navegador nesta versão. Faça backup antes de substituir arquivos ou limpar dados do navegador.
+
+## Recurso independente: geração de imagens
+A ferramenta de geração de imagens do Editor é independente do chatbot. Ela mantém sua própria configuração de endpoint, modelo e chave temporária no navegador. A remoção da dependência da OpenAI aplica-se ao chatbot de texto; não significa que a ferramenta de imagem esteja automaticamente gratuita ou sem chave.
+
+## Antes de publicar
+O pacote ainda exige configuração na sua conta Cloudflare:
+- criar ou selecionar um banco D1;
+- executar `cloudflare/schema.sql` no banco;
+- vincular `DB` e `AI` ao Worker;
+- cadastrar `JWT_SECRET` como Secret;
+- definir `ALLOWED_ORIGINS` com o domínio do site depois de publicá-lo;
+- substituir a URL de exemplo em `mesa.html` por sua URL real do Worker.
+
+Consulte o guia para seguir a sequência completa. A integração foi preparada, mas não foi publicada na sua conta e não pode ser considerada implantada até você executar esses passos.
