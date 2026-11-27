@@ -1,0 +1,18 @@
+CHECKLIST PRUMO — CLOUDFLARE WORKERS AI
+
+[ ] Extraí o ZIP.
+[ ] Enviei o conteúdo da pasta para a raiz do GitHub (index.html na raiz).
+[ ] Cloudflare Pages publicou o commit (ou fiz Direct Upload dos arquivos extraídos).
+[ ] Criei o D1 prumo-db.
+[ ] Executei cloudflare/schema.sql uma única vez.
+[ ] Configurei binding D1 com nome DB.
+[ ] Configurei binding Workers AI com nome AI.
+[ ] Criei o secret JWT_SECRET.
+[ ] Publiquei o Worker prumo-api.
+[ ] Testei /api/health.
+[ ] Coloquei a URL real do Worker em window.PRUMO_CONFIG.apiUrl no mesa.html.
+[ ] Fiz commit e aguardei o novo deploy do Pages.
+[ ] Testei cadastro, login e duas mensagens do chatbot.
+[ ] Testei Suma e /pet.
+
+Não é necessária chave OpenAI para o chatbot. Workers AI tem franquia gratuita diária limitada, não ilimitada.
